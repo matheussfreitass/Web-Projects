@@ -1,7 +1,9 @@
 const Contato = require('../models/contatoModel');
 
 exports.index = (req, res) => {
-    res.render('contato');
+    res.render('contato',{
+        contato:{}
+    });
 };
 
 exports.register = async (req, res) => {
@@ -11,15 +13,24 @@ exports.register = async (req, res) => {
 
         if (contato.errors.length > 0) {
             req.flash('errors', contato.errors); // Corrigido
-            req.session.save(() => res.redirect(req.get('/')));
+            req.session.save(() => res.redirect('/contato/index'));
             return; // Adicionado para interromper a execução
         }
 
         req.flash('success', 'Contato registrado com sucesso');
-        req.session.save(() => res.redirect(req.get('/')));
+        req.session.save(() => res.redirect(`/contato/index/${contato.contato._id}`));
         return;
     } catch (e) {
         console.log(e);
         return res.render('404');
     }
 };
+
+exports.editIndex = async function(req,res){
+    if(!req.params.id) return res.render('404');
+
+    const contato = await Contato.buscaPorId(req.params.id)
+    if(!contato) return res.render('404');
+    
+    res.render('contato', { contato }); // Passa o contato para o template
+}

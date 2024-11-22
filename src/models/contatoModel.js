@@ -17,6 +17,12 @@ function Contato(body){
   this.contato = null;
 }
 
+Contato.buscaPorId = async function(id){
+  if(typeof id !== 'string') return;
+  const user = await contatoModel.findById(id);
+  return user
+
+}
 Contato.prototype.register = async function(){
   this.valida();
   if(this.errors.length >0) return;   
@@ -29,8 +35,8 @@ Contato.prototype.valida = function() {
   // Validação
   // O e-mail precisa ser válido
   if (this.body.email && !validator.isEmail(this.body.email))this.errors.push("E-mail inválido ou senha Inválida");
-  if(!this.body.nome) this.erros.push('Nome é um campo obrigatório')
-  if(!this.body.nome && !this.body.telefone) this.erros.push('Pelo menos um contato precisa ser enviado: email ou telefone.')
+  if(!this.body.nome) this.errors.push('Nome é um campo obrigatório')
+  if(!this.body.nome && !this.body.telefone) this.errors.push('Pelo menos um contato precisa ser enviado: email ou telefone.')
 }
 
 Contato.prototype.cleanUp= function (){

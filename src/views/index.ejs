@@ -1,5 +1,5 @@
-<%- include('includes/head') %> 
-<%- include('includes/nav') %> 
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
 
 <div class="container">
   <div class="row">
@@ -9,7 +9,7 @@
       <h1 class="display-1 text-center">Agenda</h1>
       <p class="text-center lead">Seus contatos estão abaixo:</p>
       <%- include('includes/messages') %>
-      
+
       <!-- Exibe a mensagem de erro condicionalmente -->
       <% if (errors && errors.length > 0) { %>
         <div class="alert alert-danger">
@@ -18,20 +18,27 @@
       <% } %>
     </div>
 
+    <% if (contatos && contatos.length > 0) { %>
     <div class="responsive-table">
       <table class="table my-3">
-        <tr>
-          <td>Janine</td>
-          <td>Martins</td>
-          <td>65456465465</td>
-          <td>Janinejaja@gmail.com</td>
-        </tr>
-        <!-- Outras linhas da tabela -->
+        <% contatos.forEach(contato => { %>
+          <tr>
+            <td><%= contato.nome %></td>
+            <td><%= contato.sobrenome %></td>
+            <td><%= contato.telefone %></td>
+            <td><%= contato.email %></td>
+            <td><a href="/contato/index/<%= contato.id %>">Editar</a></td>
+            <td><a class="text-danger" href="/contato/delete/<%= contato.id %>">Excluir</a></td>
+          </tr>
+        <% }); %>
       </table>
     </div>
+    <% } else { %>
+    <p class="text-center lead">Nenhum contato encontrado.</p>
+    <% } %>
 
     <div class="col-lg-2"></div>
   </div>
 </div>
 
-<%- include('includes/footer') %> 
+<%- include('includes/footer') %>

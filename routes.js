@@ -1,5 +1,6 @@
 const express = require('express');
-const route = express.Router();
+const route = require('./routes');
+app.use('/admin', route); 
 
 const homeController = require('./src/controllers/homeController');
 const loginController = require('./src/controllers/loginController');

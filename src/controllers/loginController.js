@@ -42,7 +42,7 @@ exports.login = async function (req, res) {
         }
 
         req.flash('success', 'Você ingressou na agenda');
-        req.session.user=login.user;
+        req.session.user= login.user;
         req.session.save(() => res.redirect('/login/index')); // Redireciona com mensagem de sucesso
 
     } catch (e) {
